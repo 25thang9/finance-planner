@@ -1,20 +1,8 @@
 import type { NextConfig } from "next";
-
 const nextConfig: NextConfig = {
-  /* config options here */
-  experimental: {
-    agentFeedback: true,
-  },
-  cacheComponents: true,
-  partialPrefetching: true,
-  turbopack: {
-    rules: {
-      "*.css": {
-        loaders: ["@tailwindcss/turbopack"],
-        as: "*.css",
-      },
-    },
-  },
+  // Không dùng cacheComponents: trang tài chính luôn phụ thuộc session/Neon,
+  // tránh lỗi force-dynamic/Suspense của bài lab khi bật Cache Components.
+  cacheComponents: false,
+  reactStrictMode: true,
 };
-
 export default nextConfig;

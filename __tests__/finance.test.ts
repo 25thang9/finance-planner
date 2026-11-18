@@ -1,0 +1,20 @@
+import {describe,it,expect} from "vitest";
+import {calculateBalance,spendingByCategory,getDateRange,wishlistProgress,crossedMilestones,budgetProgress,budgetStatus,formatVND} from "@/lib/finance";
+describe("Finance Planner – business logic",()=>{
+ it("số dư = thu trừ chi",()=>expect(calculateBalance([{type:"INCOME",amount:100000},{type:"EXPENSE",amount:30000}])).toBe(70000));
+ it("không có giao dịch thì số dư bằng 0",()=>expect(calculateBalance([])).toBe(0));
+ it("chỉ cộng EXPENSE vào danh mục",()=>expect(spendingByCategory([{category:"FOOD",amount:60000,type:"EXPENSE"},{category:"FOOD",amount:100000,type:"INCOME"},{category:"FOOD",amount:15000,type:"EXPENSE"}]).FOOD).toBe(75000));
+ it("trả đúng phạm vi tháng hiện tại",()=>{const r=getDateRange("this-month",new Date(2026,10,17))!;expect(r.gte.getMonth()).toBe(10);expect(r.lt.getMonth()).toBe(11)});
+ it("tháng trước vào tháng 1 là tháng 12 của năm cũ",()=>{const r=getDateRange("last-month",new Date(2026,0,11))!;expect(r.gte.getFullYear()).toBe(2025);expect(r.gte.getMonth()).toBe(11)});
+ it("bộ lọc all trả undefined",()=>expect(getDateRange("all",new Date(2026,10,17))).toBeUndefined());
+ it("tiến độ wishlist làm tròn xuống",()=>expect(wishlistProgress(2999999,4000000)).toBe(74));
+ it("tiến độ wishlist không âm",()=>expect(wishlistProgress(-30000,100000)).toBe(0));
+ it("tiến độ wishlist không vượt 100%",()=>expect(wishlistProgress(900000,100000)).toBe(100));
+ it("chi phí không dương trả về 100 theo quy ước",()=>expect(wishlistProgress(0,0)).toBe(100));
+ it("ghi mốc mới khi vượt nhiều ngưỡng",()=>expect(crossedMilestones(49,78)).toEqual([50,75]));
+ it("không ghi lặp mốc khi chưa vượt",()=>expect(crossedMilestones(75,75)).toEqual([]));
+ it("cảnh báo ngân sách khi đạt 80%",()=>expect(budgetStatus(80000,100000)).toBe("warning"));
+ it("báo vượt ngân sách khi đạt 100%",()=>expect(budgetStatus(100000,100000)).toBe("over"));
+ it("ngân sách sử dụng có thể trên 100%",()=>expect(budgetProgress(120000,100000)).toBe(120));
+ it("VND không hiển thị phần thập phân",()=>expect(formatVND(250000)).not.toContain(",00"));
+});
