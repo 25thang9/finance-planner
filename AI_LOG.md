@@ -1,40 +1,94 @@
-# AI_LOG – NHẬT KÝ SỬ DỤNG AI
 
-**Dự án:** Finance Planner  
-**Học phần:** PHY10615 – Lập trình Web  
-**Mức độ sử dụng AI:** Level 3 – AI cộng tác
+# AI_LOG – Nhật ký sử dụng AI
 
-## 1. Nhật ký sử dụng AI
+**Dự án:** Finance Planner – Đồ án cá nhân PHY10615  
+**Mức sử dụng AI:** Mức 3 – AI cộng tác  
+**Công cụ AI:** ChatGPT
 
-| Ngày | Công cụ | Nội dung sử dụng AI | Cách sử dụng và kiểm chứng | Commit / PR |
-|---|---|---|---|---|
-| 17/11/2026 | ChatGPT | Phân tích yêu cầu đồ án, đối chiếu mã nguồn mẫu Tuần 7–9 và hỗ trợ xây dựng bộ mã nguồn Finance Planner ban đầu. | Sử dụng bộ mã nguồn AI hỗ trợ tạo, tiếp tục cấu hình môi trường, cơ sở dữ liệu và chạy thử các chức năng. | Bổ sung SHA |
-| 19/11/2026 | ChatGPT, công cụ tạo ảnh AI | Thiết kế logo VTTT Finance Planner, điều chỉnh nhân vật minh họa, chữ physics trên áo, màu sắc, biểu tượng và bố cục thương hiệu. | So sánh nhiều phương án, phản hồi những chi tiết chưa phù hợp, lựa chọn logo cuối cùng và lưu vào `public/vttt-logo.png`. | Bổ sung SHA |
-| 19/11/2026 | ChatGPT | Hỗ trợ thiết kế lại giao diện đăng nhập và đăng ký, tham khảo bố cục hai cột của một website thực tế. | Cập nhật `auth-form.tsx` và `login-showcase.tsx`. Chạy trên localhost, kiểm tra bố cục và điều chỉnh kích thước để hạn chế cuộn trang trên desktop. Giữ nguyên logic xác thực Better Auth. | Bổ sung SHA |
-| 19/11/2026 | ChatGPT | Hỗ trợ thay đổi nhận diện trong Sidebar và Dashboard, thay logo mặc định, loại bỏ emoji ở tiêu đề. | Chỉnh sửa `app-shell.tsx` và tiêu đề Dashboard. Giữ nguyên menu điều hướng, thông tin người dùng, avatar, đăng xuất và Dark Mode. | Bổ sung SHA |
-| 19/11/2026 | ChatGPT | Phân tích lỗi hiển thị màu chữ khi Chrome tự động điền và điều chỉnh biểu tượng GitHub. | Cập nhật `globals.css` và `auth-form.tsx`, kiểm tra lại giao diện trên trình duyệt. Xác nhận màu chữ trong ô nhập liệu rõ hơn. | Bổ sung SHA |
-| 19/11/2026 | ChatGPT | Hỗ trợ phân tích lỗi TypeScript phát sinh trong quá trình chỉnh sửa mã nguồn. | Phát hiện file thư viện `node_modules/@types/react/index.d.ts` bị chứa nhầm mã JSX. Khôi phục thư viện bằng npm và chạy `npm.cmd run typecheck` thành công. | Bổ sung SHA |
+## 1. Quá trình thực hiện trước khi sử dụng AI
 
-## 2. Trường hợp kết quả AI chưa phù hợp và cách xử lý
+Giai đoạn đầu, dự án Finance Planner được thực hiện theo các bài hướng dẫn Tuần 8, 9 và 10 trên trang WebLab của môn học: https://weblab.koomaru.com/.
 
-Trong quá trình thiết kế lại giao diện đăng nhập, phiên bản ban đầu do AI đề xuất có kích thước logo và khoảng cách giữa các thành phần tương đối lớn, khiến nội dung không hiển thị đầy đủ trong một màn hình.
+Các nội dung thực hành được viết và chạy thử trên máy cá nhân, bao gồm kết nối cơ sở dữ liệu, sử dụng Prisma, xây dựng Dashboard và các chức năng quản lý giao dịch. Giai đoạn thực hành theo WebLab không sử dụng AI để làm thay bài học.
 
-Vấn đề được phát hiện khi chạy thử website trên localhost. Dựa trên ảnh chụp màn hình thực tế, yêu cầu điều chỉnh được đưa ra nhằm thu nhỏ logo, giảm khoảng cách giữa các thành phần và tối ưu bố cục hai cột.
+Ngày 17/11/2026, phiên bản local đã hiển thị Dashboard với tổng thu, tổng chi, số dư và thống kê theo danh mục. Trang Transactions hiển thị danh sách 30 giao dịch và biểu mẫu thêm giao dịch. Kết quả được ghi nhận bằng ảnh chụp màn hình.
 
-Ngoài ra, khi Chrome tự động điền thông tin đăng nhập, ô Email xuất hiện nền xám và màu chữ khó đọc. Sau khi kiểm tra, CSS được điều chỉnh để xử lý trạng thái autofill và tăng độ tương phản.
+Sau giai đoạn thực hành, ChatGPT được sử dụng để hỗ trợ hoàn thiện ứng dụng theo yêu cầu của đồ án.
 
-Những trường hợp này cho thấy mã nguồn và phương án thiết kế do AI đề xuất cần được kiểm chứng trực tiếp trên môi trường thực tế. Kết quả chỉ được sử dụng sau khi đã kiểm tra và điều chỉnh phù hợp.
+## 2. Nhật ký sử dụng AI
 
-## 3. Kết quả thực hiện ngày 19/11/2026
+| Ngày | Công cụ | Việc nhờ AI | Prompt (tóm tắt) | Kết quả sử dụng | Kiểm chứng / điều chỉnh | Commit |
+|---|---|---|---|---|---|---|
+| 17–18/11/2026 | ChatGPT | Rà soát và hoàn thiện Finance Planner | Đối chiếu ứng dụng đã làm theo WebLab với đề đồ án, bổ sung các yêu cầu còn thiếu | Sử dụng mã nguồn và hướng dẫn của AI để hoàn thiện các chức năng | Tích hợp vào dự án, chạy thử trên localhost và kiểm tra giao diện | `7a806a8` |
+| 17–18/11/2026 | ChatGPT | Hỗ trợ hoàn thiện chức năng | Hỗ trợ CRUD giao dịch, Wishlist, biểu đồ, thông báo tiết kiệm, ngân sách và xác thực | Điều chỉnh mã nguồn để bổ sung các chức năng theo yêu cầu | Chạy thử chức năng, kiểm tra đăng nhập và dữ liệu giữa các tài khoản | `7a806a8` |
+| 18/11/2026 | ChatGPT | Hỗ trợ kiểm thử và triển khai | Hướng dẫn xử lý lỗi, chạy kiểm thử và triển khai trên GitHub, Vercel | Sử dụng hướng dẫn để cấu hình và hoàn thiện ứng dụng | Kiểm tra GitHub Actions; workflow của commit `7a806a8` chạy thành công | `7a806a8` |
+| 19/11/2026 | ChatGPT | Thiết kế logo và cải thiện giao diện | Thiết kế logo VTTT Finance Planner, cập nhật Login và Sidebar theo phong cách phẳng, màu xanh teal | Sử dụng logo được AI hỗ trợ tạo và chỉnh sửa các component giao diện | Kiểm tra giao diện trên localhost, điều chỉnh kích thước logo, bố cục và giữ nguyên avatar người dùng | `3214a6d` |
+| 19/11/2026 | ChatGPT | Hỗ trợ sửa lỗi giao diện và TypeScript | Sửa trang Login bị cuộn, màu chữ khi autofill và lỗi thư viện React TypeScript | Áp dụng hướng dẫn chỉnh sửa CSS và khôi phục thư viện | Kiểm tra lại giao diện; chạy `npm.cmd run typecheck` thành công | `3214a6d` |
+| 19/11/2026 | ChatGPT | Hỗ trợ cập nhật tài liệu | Rà soát README, AI_LOG và AGENTS theo đề PHY10615 | Biên tập và bổ sung nội dung tài liệu | Đối chiếu đề bài, ảnh chạy local và lịch sử Commit thực tế | `5a14b35`; tiếp tục cập nhật |
 
-Hoàn thiện logo thương hiệu VTTT Finance Planner, tích hợp vào trang đăng nhập và phần Sidebar của các trang chức năng.
+*Các prompt được ghi dưới dạng tóm tắt nội dung trao đổi với AI.*
 
-Giao diện Login/Register được thiết kế lại theo bố cục hai cột, với phần nhận diện thương hiệu và giới thiệu chức năng ở bên trái, khu vực xác thực ở bên phải. Bố cục được thu gọn để phù hợp hơn với màn hình desktop.
+## 3. Kiểm chứng và lịch sử phát triển
 
-Khắc phục lỗi hiển thị màu chữ trong ô nhập liệu khi trình duyệt tự động điền thông tin. Cập nhật biểu tượng GitHub và điều chỉnh nhận diện Dashboard, đồng thời giữ nguyên các chức năng hiện có.
+### 3.1. Minh chứng chạy thử trên local
 
-Trong quá trình chỉnh sửa, lỗi thư viện React TypeScript được phát hiện và xử lý. Lệnh `npm.cmd run typecheck` hoàn thành không có lỗi.
+Ngày 17/11/2026, ứng dụng đã được chạy thử trên `localhost:3000` trước khi mã nguồn hoàn chỉnh được cập nhật lên GitHub.
 
-Các thay đổi giao diện đã được Commit và Push bằng GitHub Desktop. Kết quả CI và kiểm thử chức năng trên bản Production sau lần cập nhật này cần được kiểm tra bổ sung.
+**Hình 1. Dashboard chạy trên localhost**
 
+![Dashboard local](./docs/images/dashboard-local.png)
 
+**Hình 2. Trang Transactions chạy trên localhost**
+
+![Transactions local](./docs/images/transactions-local.png)
+
+Hai ảnh ghi nhận kết quả hiển thị các màn hình Dashboard và Transactions tại thời điểm chạy local.
+
+### 3.2. Lịch sử Git
+
+| Ngày | Commit | Nội dung |
+|---|---|---|
+| 10/11/2026 | `59db203` | Khởi tạo dự án Next.js |
+| 18/11/2026 | `7a806a8` | Tích hợp và cập nhật mã nguồn Finance Planner |
+| 19/11/2026 | `3214a6d` | Cập nhật logo và giao diện đăng nhập |
+| 19/11/2026 | `5a14b35` | Cập nhật AI_LOG |
+
+Các nội dung thực hành Tuần 8–10 đã được thực hiện và chạy thử trên local trước khi cập nhật mã nguồn tập trung lên GitHub ngày 18/11/2026.
+
+Do chưa chia Commit theo từng mốc tuần học, tại thời điểm rà soát ngày 19/11/2026, repository chưa có các Git tag `fp1`, `fp2` và `fp3`. Lịch sử Git được giữ nguyên theo thời điểm Commit thực tế.
+
+## 4. Tự đánh giá việc sử dụng AI
+
+**Phần thực hiện không sử dụng AI**
+
+- Thực hành các bài học Tuần 8–10 theo hướng dẫn trên WebLab.
+- Viết và chạy thử mã nguồn trên môi trường local.
+- Kiểm tra kết quả hiển thị Dashboard, Transactions và dữ liệu mẫu.
+- Thực hiện các thao tác cấu hình, chạy ứng dụng và kiểm tra kết quả trên máy cá nhân.
+
+**Phần AI hỗ trợ**
+
+- Rà soát yêu cầu đồ án và hỗ trợ hoàn thiện các chức năng.
+- Hỗ trợ tạo, chỉnh sửa và giải thích mã nguồn.
+- Hỗ trợ xử lý lỗi trong quá trình cài đặt, kiểm thử và triển khai.
+- Hỗ trợ thiết kế logo, cải thiện giao diện và rà soát tài liệu.
+
+**Một trường hợp AI đưa ra kết quả chưa phù hợp**
+
+Trong quá trình cải thiện giao diện Login, bố cục ban đầu xuất hiện thanh cuộn không mong muốn và chữ trong ô nhập liệu tự động điền chưa dễ đọc. Các vấn đề được phát hiện khi kiểm tra trực tiếp trên trình duyệt.
+
+Sau đó, giao diện và CSS được điều chỉnh theo phản hồi, đồng thời kiểm tra lại kết quả trên localhost.
+
+Ngoài ra, quá trình chỉnh sửa dự án phát sinh lỗi liên quan đến tệp khai báo kiểu TypeScript của React. Lỗi được xử lý bằng cách khôi phục thư viện và chạy lại kiểm tra TypeScript.
+
+**Nội dung tiếp tục hoàn thiện**
+
+- Hoàn thiện README và các minh chứng kiểm thử.
+- Tiếp tục kiểm tra phiên bản Production.
+- Hoàn thiện đồ án trước khi tạo tag `v1.0`.
+- Cập nhật nhật ký khi có thay đổi hoặc tiếp tục sử dụng AI.
+
+---
+
+**Tài liệu thực hành:** https://weblab.koomaru.com/  
+**Repository:** https://github.com/25thang9/finance-planner
