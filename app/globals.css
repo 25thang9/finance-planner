@@ -15,7 +15,9 @@
   --font-sans: var(--font-inter);
 }
 
-/* Light Mode */
+/* =========================
+   LIGHT MODE
+========================= */
 :root {
   --background: #f5f7fb;
   --foreground: #17263b;
@@ -27,7 +29,9 @@
   --primary-foreground: #ffffff;
 }
 
-/* Dark Mode */
+/* =========================
+   DARK MODE
+========================= */
 .dark {
   --background: #0b1726;
   --foreground: #eaf1fc;
@@ -39,7 +43,9 @@
   --primary-foreground: #0a1b26;
 }
 
-/* Cấu hình chung */
+/* =========================
+   CẤU HÌNH CHUNG
+========================= */
 * {
   box-sizing: border-box;
 }
@@ -75,7 +81,9 @@ button {
   color: #12263c;
 }
 
-/* Các tiện ích giao diện */
+/* =========================
+   DASHBOARD & SIDEBAR
+========================= */
 @layer utilities {
   .panel {
     border: 1px solid var(--border);
@@ -104,8 +112,44 @@ button {
   }
 }
 
-/* Responsive */
-@media (max-width: 900px) {
+/* =========================
+   LOGIN / REGISTER
+========================= */
+
+/* Chữ trong các ô nhập rõ nét */
+.auth-page input {
+  color: #183247 !important;
+  -webkit-text-fill-color: #183247 !important;
+  caret-color: #183247;
+}
+
+/* Màu chữ gợi ý */
+.auth-page input::placeholder {
+  color: #8295a7 !important;
+  opacity: 1;
+}
+
+/* Sửa nền và màu chữ khi Chrome tự điền */
+.auth-page input:-webkit-autofill,
+.auth-page input:-webkit-autofill:hover,
+.auth-page input:-webkit-autofill:focus,
+.auth-page input:-webkit-autofill:active {
+  -webkit-text-fill-color: #183247 !important;
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+  caret-color: #183247 !important;
+}
+
+/* Không đổi màu ô nhập khi được focus */
+.auth-page input:focus {
+  background-color: #ffffff;
+  color: #183247;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 767px) {
   .app-grid {
     grid-template-columns: 1fr;
   }

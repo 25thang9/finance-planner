@@ -193,7 +193,7 @@ export default async function DashboardPage() {
 
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Xin chào, {user.name.split(" ").at(-1)}{" "}
-            <span aria-hidden="true">👋</span>
+            <span aria-hidden="true"></span>
           </h1>
 
           <p className="subtle-title mt-2">

@@ -1,6 +1,7 @@
 
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -15,7 +16,6 @@ import {
   ArrowLeftRight,
   Target,
   PiggyBank,
-  WalletCards,
   LogOut,
   Sun,
   Moon,
@@ -77,24 +77,22 @@ export function AppShell({
 
   const nav = (
     <>
-      {/* Logo và tên ứng dụng */}
-      <div className="px-6 pb-8 pt-8">
+      {/* Logo VTTT Finance Planner */}
+      <div className="px-5 pb-7 pt-7">
         <Link
           href="/dashboard"
-          className="flex items-center gap-3"
+          onClick={() => setOpen(false)}
+          aria-label="VTTT Finance Planner - Tổng quan"
+          className="block w-fit max-w-full"
         >
-          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#d5f0ed] text-[#175c68]">
-            <WalletCards size={24} />
-          </span>
-
-          <span>
-            <strong className="block text-lg tracking-tight">
-              Finance Planner
-            </strong>
-            <small className="text-xs text-[var(--muted-foreground)]">
-              YOUR MONEY, CLEARER
-            </small>
-          </span>
+          <Image
+            src="/vttt-logo.png"
+            alt="VTTT Finance Planner"
+            width={1000}
+            height={360}
+            priority
+            className="h-auto w-[205px] max-w-full object-contain"
+          />
         </Link>
       </div>
 
@@ -222,10 +220,9 @@ export function AppShell({
               Xin chào, {name.split(" ").at(-1)}
             </span>
 
-            {/* 
-              FIX HYDRATION:
-              Render cả hai icon giống nhau trên server/client.
-              CSS quyết định icon nào hiển thị theo theme.
+            {/*
+              Giữ nguyên cách xử lý hydration.
+              CSS quyết định icon sáng/tối.
             */}
             <Button
               type="button"

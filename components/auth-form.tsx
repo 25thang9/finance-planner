@@ -1,24 +1,332 @@
+
 "use client";
-import {useState,type FormEvent} from "react";
-import {useRouter} from "next/navigation";
+
+import { useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import {WalletCards,ShieldCheck,ArrowUpRight,Loader2} from "lucide-react";
-import {authClient} from "@/lib/auth-client";
-import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
-import {Card} from "@/components/ui/card";
-export function AuthForm({mode,githubEnabled}:{mode:"login"|"register";githubEnabled:boolean}){
- const router=useRouter();const [error,setError]=useState("");const [pending,setPending]=useState(false);
- async function submit(event:FormEvent<HTMLFormElement>){
-  event.preventDefault();setError("");setPending(true);
-  const data=new FormData(event.currentTarget),email=String(data.get("email")||""),password=String(data.get("password")||"");
-  try{
-   const res= mode==="login"?await authClient.signIn.email({email,password}):await authClient.signUp.email({name:String(data.get("name")||""),email,password});
-   if(res.error){setError(res.error.message??"Không thể xác thực tài khoản");return;}
-   router.push("/dashboard");router.refresh();
-  }catch{setError("Không thể kết nối máy chủ. Hãy thử lại.")}
-  finally{setPending(false)}
- }
- async function github(){setPending(true);try{const res=await authClient.signIn.social({provider:"github",callbackURL:"/dashboard"});if(res.error)setError(res.error.message||"Lỗi GitHub OAuth");}catch{setError("GitHub OAuth chưa được cấu hình đúng")}finally{setPending(false)}}
- return <main className="grid min-h-screen grid-cols-1 bg-[#f3f7f9] lg:grid-cols-2"><section className="relative hidden overflow-hidden bg-[#15364d] px-12 py-14 text-white lg:flex lg:flex-col"><div className="absolute -right-28 top-30 h-96 w-96 rounded-full bg-[#56bbbd]/15 blur-3xl"/><div className="absolute bottom-10 -left-30 h-96 w-96 rounded-full bg-[#8bb8ff]/10 blur-3xl"/><div className="relative flex items-center gap-3"><span className="rounded-2xl bg-[#87d2c7] p-2.5 text-[#143549]"><WalletCards size={25}/></span><strong className="text-xl">Finance Planner</strong></div><div className="relative my-auto max-w-xl"><span className="inline-flex rounded-full border border-[#75a8b9] px-4 py-2 text-xs font-bold tracking-wider text-[#b9e4e7]">DỄ THEO DÕI · DỄ TIẾT KIỆM</span><h1 className="mt-8 text-5xl font-bold leading-[1.16] tracking-tight">Làm chủ tài chính.<br/><span className="text-[#8bdbd3]">Theo đuổi điều bạn muốn.</span></h1><p className="mt-6 max-w-md text-lg leading-relaxed text-[#c8d8e3]">Theo dõi mỗi khoản thu chi, lập kế hoạch ngân sách và biến mục tiêu tiết kiệm thành hiện thực.</p><div className="mt-12 grid max-w-md grid-cols-2 gap-4"><div className="rounded-2xl border border-[#8ecdc0]/30 bg-white/10 p-5"><p className="text-sm text-[#d4ecec]">Giao dịch</p><p className="mt-3 text-3xl font-bold">Rõ ràng</p><p className="mt-2 text-xs text-[#d2e2ea]">Tất cả thu, chi và danh mục</p></div><div className="rounded-2xl border border-[#8ecdc0]/30 bg-white/10 p-5"><p className="text-sm text-[#d4ecec]">Mục tiêu</p><p className="mt-3 text-3xl font-bold">Từng bước</p><p className="mt-2 text-xs text-[#d2e2ea]">Mốc 50% · 75% · 100%</p></div></div></div><p className="relative text-xs text-[#a5c4d0]">PHY10615 · Đồ án cá nhân · HK1 2026–2027</p></section><section className="flex min-h-screen items-center justify-center px-5 py-12"><div className="w-full max-w-[465px]"><div className="mb-9 lg:hidden"><span className="inline-flex items-center gap-2 text-xl font-bold"><WalletCards className="text-[#2e7986]"/> Finance Planner</span></div><p className="muted-label text-[#267787]">BẮT ĐẦU TỪ HÔM NAY</p><h2 className="mt-3 text-3xl font-bold tracking-tight text-[#1b3447]">{mode==="login"?"Chào mừng quay lại":"Tạo tài khoản mới"}</h2><p className="mb-7 mt-2 text-sm text-[#6b8091]">{mode==="login"?"Đăng nhập để tiếp tục hành trình tài chính của bạn.":"Bắt đầu với kế hoạch tài chính của riêng bạn."}</p><Card className="border-[#dce7ec] p-7 shadow-[0_15px_50px_#1739520d]"><form onSubmit={submit} className="space-y-4">{mode==="register"&&<div><label className="mb-1.5 block text-sm font-semibold text-[#2c4453]" htmlFor="name">Họ và tên</label><Input id="name" name="name" autoComplete="name" placeholder="Nguyễn Văn A" required minLength={2}/></div>}<div><label className="mb-1.5 block text-sm font-semibold text-[#2c4453]" htmlFor="email">Email</label><Input id="email" name="email" type="email" autoComplete="email" placeholder="email@example.com" required/></div><div><label className="mb-1.5 block text-sm font-semibold text-[#2c4453]" htmlFor="password">Mật khẩu</label><Input id="password" name="password" type="password" autoComplete={mode==="login"?"current-password":"new-password"} minLength={8} required placeholder="Ít nhất 8 ký tự"/></div>{error&&<p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</p>}<Button disabled={pending} className="w-full" size="lg" type="submit">{pending&&<Loader2 size={17} className="animate-spin"/>}{mode==="login"?"Đăng nhập":"Đăng ký tài khoản"}<ArrowUpRight size={18}/></Button></form><div className="my-5 flex items-center gap-3 text-xs text-[#7b8d9a]"><span className="h-px flex-1 bg-[#dae5eb]"/>hoặc<span className="h-px flex-1 bg-[#dae5eb]"/></div><Button type="button" variant="outline" className="w-full" disabled={!githubEnabled||pending} onClick={github}><svg role="img" aria-label="GitHub" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 8.36 22.9c.57.1.78-.25.78-.55v-2.1c-3.17.7-3.84-1.35-3.84-1.35-.52-1.32-1.27-1.67-1.27-1.67-1.04-.7.08-.69.08-.69 1.15.08 1.75 1.18 1.75 1.18 1.02 1.74 2.68 1.23 3.34.94.1-.74.4-1.23.73-1.51-2.53-.29-5.2-1.27-5.2-5.68 0-1.25.45-2.27 1.18-3.07-.12-.3-.51-1.45.11-3.02 0 0 .96-.31 3.16 1.17A10.95 10.95 0 0 1 12 6.83c.98 0 1.96.13 2.88.39 2.2-1.48 3.16-1.17 3.16-1.17.62 1.57.23 2.72.11 3.02.74.8 1.18 1.82 1.18 3.07 0 4.42-2.67 5.39-5.21 5.67.41.36.77 1.05.77 2.13v2.41c0 .3.2.65.79.55A11.5 11.5 0 0 0 12 .5z"/></svg>{githubEnabled?"Tiếp tục với GitHub":"GitHub chưa cấu hình OAuth"}</Button></Card><p className="mt-6 text-center text-sm text-[#5d7384]">{mode==="login"?"Chưa có tài khoản?":"Đã có tài khoản?"} <Link href={mode==="login"?"/register":"/login"} className="font-bold text-[#2d7885] hover:underline">{mode==="login"?"Đăng ký ngay":"Đăng nhập"}</Link></p><p className="mt-8 flex items-center justify-center gap-2 text-xs text-[#7d919d]"><ShieldCheck size={15}/>Mật khẩu không được lưu dạng văn bản thuần</p></div></section></main>
+import Image from "next/image";
+
+import {
+  ShieldCheck,
+  ArrowRight,
+  Loader2,
+  Mail,
+  LockKeyhole,
+  UserRound,
+  Github,
+} from "lucide-react";
+
+import { authClient } from "@/lib/auth-client";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { LoginShowcase } from "@/components/login-showcase";
+
+type AuthFormProps = {
+  mode: "login" | "register";
+  githubEnabled: boolean;
+};
+
+export function AuthForm({
+  mode,
+  githubEnabled,
+}: AuthFormProps) {
+  const router = useRouter();
+
+  const [error, setError] = useState("");
+  const [pending, setPending] = useState(false);
+
+  const isLogin = mode === "login";
+
+  // Đăng nhập / đăng ký bằng email
+  async function submit(
+    event: FormEvent<HTMLFormElement>
+  ) {
+    event.preventDefault();
+    setError("");
+    setPending(true);
+
+    const data = new FormData(event.currentTarget);
+
+    const email = String(data.get("email") || "");
+    const password = String(data.get("password") || "");
+
+    try {
+      const res = isLogin
+        ? await authClient.signIn.email({
+            email,
+            password,
+          })
+        : await authClient.signUp.email({
+            name: String(data.get("name") || ""),
+            email,
+            password,
+          });
+
+      if (res.error) {
+        setError(
+          res.error.message ??
+            "Không thể xác thực tài khoản"
+        );
+        return;
+      }
+
+      router.push("/dashboard");
+      router.refresh();
+    } catch {
+      setError(
+        "Không thể kết nối máy chủ. Hãy thử lại."
+      );
+    } finally {
+      setPending(false);
+    }
+  }
+
+  // Đăng nhập bằng GitHub
+  async function github() {
+    setError("");
+    setPending(true);
+
+    try {
+      const res = await authClient.signIn.social({
+        provider: "github",
+        callbackURL: "/dashboard",
+      });
+
+      if (res.error) {
+        setError(
+          res.error.message || "Lỗi GitHub OAuth"
+        );
+      }
+    } catch {
+      setError(
+        "GitHub OAuth chưa được cấu hình đúng"
+      );
+    } finally {
+      setPending(false);
+    }
+  }
+
+  return (
+    <main className="auth-page grid min-h-dvh grid-cols-1 bg-[#075363] lg:h-dvh lg:overflow-hidden lg:grid-cols-2">
+      {/* PHẦN GIỚI THIỆU BÊN TRÁI */}
+      <div className="hidden h-full min-h-0 lg:block">
+        <LoginShowcase />
+      </div>
+
+      {/* KHUNG ĐĂNG NHẬP BÊN PHẢI */}
+      <section className="flex min-h-dvh items-center justify-center px-4 py-6 sm:px-8 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:px-8 lg:py-3">
+        <div className="w-full max-w-[530px] rounded-[26px] border border-[#e4ebed] bg-white px-6 py-6 shadow-[0_18px_50px_rgba(0,29,43,0.12)] sm:px-9 lg:py-5">
+
+          {/* Logo khi xem trên điện thoại */}
+          <div className="mb-5 flex justify-center lg:hidden">
+            <Image
+              src="/vttt-logo.png"
+              alt="VTTT Finance Planner"
+              width={1000}
+              height={390}
+              priority
+              className="h-auto w-[235px] max-w-full object-contain"
+            />
+          </div>
+
+          {/* TIÊU ĐỀ */}
+          <div className="mb-5">
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#617789]">
+              BẮT ĐẦU TỪ HÔM NAY
+            </p>
+
+            <h1 className="mt-2 text-[28px] font-bold leading-tight tracking-tight text-[#102f40] sm:text-[32px]">
+              {isLogin
+                ? "Chào mừng quay lại"
+                : "Tạo tài khoản mới"}
+            </h1>
+
+            <p className="mt-2 text-[13px] leading-5 text-[#647b8d]">
+              {isLogin
+                ? "Đăng nhập để tiếp tục hành trình tài chính của bạn."
+                : "Bắt đầu với kế hoạch tài chính của riêng bạn."}
+            </p>
+          </div>
+
+          {/* FORM */}
+          <form
+            onSubmit={submit}
+            className="space-y-3"
+          >
+            {/* Họ tên khi đăng ký */}
+            {!isLogin && (
+              <div>
+                <label
+                  htmlFor="name"
+                  className="mb-1.5 block text-sm font-semibold text-[#203e50]"
+                >
+                  Họ và tên
+                </label>
+
+                <div className="relative">
+                  <UserRound
+                    size={18}
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#567485]"
+                  />
+
+                  <Input
+                    id="name"
+                    name="name"
+                    autoComplete="name"
+                    placeholder="Nguyễn Văn A"
+                    minLength={2}
+                    required
+                    className="h-11 rounded-xl border-[#cbdce5] bg-white pl-11 text-[#183247]"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Email */}
+            <div>
+              <label
+                htmlFor="email"
+                className="mb-1.5 block text-sm font-semibold text-[#203e50]"
+              >
+                Email
+              </label>
+
+              <div className="relative">
+                <Mail
+                  size={18}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#567485]"
+                />
+
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="email@example.com"
+                  required
+                  className="h-11 rounded-xl border-[#cbdce5] bg-white pl-11 text-[#183247]"
+                />
+              </div>
+            </div>
+
+            {/* Mật khẩu */}
+            <div>
+              <label
+                htmlFor="password"
+                className="mb-1.5 block text-sm font-semibold text-[#203e50]"
+              >
+                Mật khẩu
+              </label>
+
+              <div className="relative">
+                <LockKeyhole
+                  size={18}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#567485]"
+                />
+
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete={
+                    isLogin
+                      ? "current-password"
+                      : "new-password"
+                  }
+                  minLength={8}
+                  required
+                  placeholder="Ít nhất 8 ký tự"
+                  className="h-11 rounded-xl border-[#cbdce5] bg-white pl-11 text-[#183247]"
+                />
+              </div>
+            </div>
+
+            {/* Thông báo lỗi */}
+            {error && (
+              <p
+                role="alert"
+                className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700"
+              >
+                {error}
+              </p>
+            )}
+
+            {/* Nút đăng nhập / đăng ký */}
+            <Button
+              disabled={pending}
+              type="submit"
+              size="lg"
+              className="mt-2 h-11 w-full rounded-xl bg-[#007669] font-semibold text-white hover:bg-[#005e57]"
+            >
+              {pending && (
+                <Loader2
+                  size={17}
+                  className="animate-spin"
+                />
+              )}
+
+              {isLogin
+                ? "Đăng nhập"
+                : "Đăng ký tài khoản"}
+
+              <ArrowRight size={17} />
+            </Button>
+          </form>
+
+          {/* Phân cách */}
+          <div className="my-4 flex items-center gap-3 text-xs text-[#80909d]">
+            <span className="h-px flex-1 bg-[#dce7ec]" />
+            hoặc
+            <span className="h-px flex-1 bg-[#dce7ec]" />
+          </div>
+
+          {/* Nút GitHub OAuth */}
+          <Button
+            type="button"
+            variant="outline"
+            className="h-11 w-full rounded-xl border-[#cbdce5] bg-white text-[#183247] hover:bg-[#eef7f6]"
+            disabled={!githubEnabled || pending}
+            onClick={github}
+          >
+            <Github
+              size={20}
+              strokeWidth={2.2}
+              aria-hidden="true"
+            />
+
+            <span>
+              {githubEnabled
+                ? "Đăng nhập với GitHub"
+                : "GitHub chưa cấu hình OAuth"}
+            </span>
+          </Button>
+
+          {/* Chuyển trang đăng nhập/đăng ký */}
+          <p className="mt-4 text-center text-sm text-[#64788a]">
+            {isLogin
+              ? "Chưa có tài khoản?"
+              : "Đã có tài khoản?"}{" "}
+
+            <Link
+              href={isLogin ? "/register" : "/login"}
+              className="font-bold text-[#007b6c] hover:underline"
+            >
+              {isLogin
+                ? "Đăng ký ngay"
+                : "Đăng nhập"}
+            </Link>
+          </p>
+
+          {/* Thông tin bảo mật */}
+          <p className="mt-4 flex items-center justify-center gap-2 text-center text-[11px] text-[#899aa6]">
+            <ShieldCheck size={14} />
+            Mật khẩu không được lưu dạng văn bản thuần
+          </p>
+        </div>
+      </section>
+    </main>
+  );
 }
