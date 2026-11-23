@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -11,6 +12,7 @@ enum TransactionType {
   INCOME
   EXPENSE
 }
+
 enum Category {
   FOOD
   TRANSPORT
@@ -21,6 +23,7 @@ enum Category {
   INVESTMENT
   OTHER
 }
+
 enum Priority {
   LOW
   MEDIUM
@@ -53,6 +56,7 @@ model Session {
   userAgent String?
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([userId])
 }
 
@@ -71,6 +75,7 @@ model Account {
   password              String?
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
+
   @@index([userId])
 }
 
@@ -86,13 +91,14 @@ model Verification {
 model Transaction {
   id          String          @id @default(cuid())
   userId      String
-  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   type        TransactionType
   amount      Int
   description String
   category    Category
   date        DateTime
-  createdAt   DateTime        @default(now())
+  createdAt   DateTime         @default(now())
+
   @@index([userId, date])
 }
 
@@ -103,9 +109,11 @@ model WishlistItem {
   name       String
   cost       Int
   priority   Priority          @default(MEDIUM)
-  isBought   Boolean           @default(false) // dữ liệu cũ từ lab được giữ nguyên
+  isBought   Boolean           @default(false)
+  deadline   DateTime?         @db.Date
   createdAt  DateTime          @default(now())
   milestones SavingMilestone[]
+
   @@index([userId])
 }
 
@@ -117,10 +125,10 @@ model SavingMilestone {
   wishlist   WishlistItem @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
   milestone  Int
   createdAt  DateTime     @default(now())
+
   @@unique([userId, wishlistId, milestone])
 }
 
-// Tính năng mở rộng: ngân sách theo danh mục mỗi tháng.
 model Budget {
   id        String   @id @default(cuid())
   userId    String
@@ -130,5 +138,6 @@ model Budget {
   amount    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
   @@unique([userId, category, month])
 }
