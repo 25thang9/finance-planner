@@ -13,11 +13,7 @@ import {
   Clock3,
 } from "lucide-react";
 
-import {
-  formatVND,
-  wishlistProgress,
-} from "@/lib/finance";
-
+import { formatVND } from "@/lib/finance";
 import { calculateSavingsPlan } from "@/lib/savings-plan";
 import { PRIORITY_NAMES } from "@/lib/labels";
 import { deleteWishlist } from "./actions";
@@ -47,6 +43,40 @@ type WishlistManagerProps = {
   today: string;
 };
 
+// Tính tiến độ thực tế, giới hạn trong 0–100%.
+function getProgress(balance: number, cost: number): number {
+  if (cost <= 0) return 0;
+
+  return Math.min(
+    100,
+    Math.max(0, balance) / cost * 100
+  );
+}
+
+// Dưới 1% hiển thị 2 số thập phân.
+// Từ 1% trở lên hiển thị số nguyên.
+// Không hiển thị 100% khi chưa thực sự đạt đủ tiền.
+function formatProgress(percent: number): string {
+  if (percent <= 0) return "0%";
+  if (percent >= 100) return "100%";
+
+  if (percent < 1) {
+    const display = Math.max(
+      0.01,
+      Math.round(percent * 100) / 100
+    );
+
+    return (
+      display.toLocaleString("vi-VN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }) + "%"
+    );
+  }
+
+  return `${Math.floor(percent)}%`;
+}
+
 function formatDeadline(value: string): string {
   const [year, month, day] = value.split("-");
   return `${day}/${month}/${year}`;
@@ -74,6 +104,11 @@ export function WishlistManager({
           <p className="subtle-title mt-2">
             Theo dõi tiến độ tiết kiệm dựa trên số dư hiện tại:{" "}
             <strong>{formatVND(balance)}</strong>.
+          </p>
+
+          <p className="mt-2 text-xs text-[var(--muted-foreground)]">
+            Tiến độ được ước tính theo số dư chung,
+            chưa phân bổ tiền riêng cho từng mục tiêu.
           </p>
         </div>
 
@@ -134,9 +169,9 @@ export function WishlistManager({
 
           <p className="mt-1 text-sm text-[var(--muted-foreground)]">
             Khi số dư vượt một mốc sau thao tác giao dịch,
-            bạn sẽ nhận thông báo chúc mừng. Mỗi mốc của
-            mỗi mục tiêu chỉ được báo một lần, có lưu
-            trong database.
+            hệ thống hiển thị thông báo chúc mừng.
+            Mỗi mốc của mỗi mục tiêu chỉ được thông báo
+            một lần và được lưu trong database.
           </p>
         </div>
       </div>
@@ -155,10 +190,8 @@ function WishlistCard({
 }) {
   const [edit, setEdit] = useState(false);
 
-  const percent = wishlistProgress(
-    balance,
-    item.cost
-  );
+  const percent = getProgress(balance, item.cost);
+  const percentText = formatProgress(percent);
 
   const plan = calculateSavingsPlan({
     cost: item.cost,
@@ -193,7 +226,7 @@ function WishlistCard({
         </span>
 
         <strong className="text-2xl text-[#34838a]">
-          {percent}%
+          {percentText}
         </strong>
       </div>
 
@@ -219,14 +252,13 @@ function WishlistCard({
         )}
       </p>
 
-      {item.deadline && (
+      {item.deadline ? (
         <div className="mt-5 rounded-xl border border-[var(--border)] bg-[var(--muted)]/40 p-4">
           <div className="flex items-center gap-2 text-sm font-semibold">
             <CalendarDays
               size={16}
               className="text-[#46949b]"
             />
-
             Hạn chót: {formatDeadline(item.deadline)}
           </div>
 
@@ -269,9 +301,7 @@ function WishlistCard({
             </p>
           )}
         </div>
-      )}
-
-      {!item.deadline && (
+      ) : (
         <p className="mt-4 flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
           <CalendarDays size={15} />
           Chưa đặt hạn chót cho mục tiêu này.
