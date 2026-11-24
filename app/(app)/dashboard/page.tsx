@@ -233,22 +233,22 @@ export default async function DashboardPage() {
           </p>
         </div>
       )}
-    
-{totals.balance < 0 && (
-  <div className="flex items-center gap-3 rounded-xl border border-red-300 bg-red-50 p-4 text-red-800 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300">
-    <AlertCircle size={20} />
-    <p className="text-sm">
-      <strong>Cảnh báo tài chính:</strong> Chi tiêu đã vượt
-      thu nhập {formatVND(Math.abs(totals.balance))}.
-      Hãy xem lại kế hoạch chi tiêu.
-    </p>
-  </div>
-)}
 
+      {totals.balance < 0 && (
+        <div className="flex items-center gap-3 rounded-xl border border-red-300 bg-red-50 p-4 text-red-800 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300">
+          <AlertCircle size={20} />
+
+          <p className="text-sm">
+            <strong>Cảnh báo tài chính:</strong>{" "}
+            Chi tiêu đã vượt thu nhập{" "}
+            {formatVND(Math.abs(totals.balance))}.
+            Hãy xem lại kế hoạch chi tiêu.
+          </p>
+        </div>
+      )}
 
       {/* THỐNG KÊ TÀI CHÍNH */}
       <div className="grid gap-4 md:grid-cols-3">
-        {/* SỐ DƯ HIỆN TẠI - ĐỒNG BỘ LIGHT/DARK MODE */}
         <Card>
           <div className="flex items-center justify-between gap-3">
             <p className="text-sm text-[var(--muted-foreground)]">
@@ -269,7 +269,6 @@ export default async function DashboardPage() {
           </p>
         </Card>
 
-        {/* TỔNG THU NHẬP */}
         <Card>
           <div className="flex items-center justify-between">
             <p className="text-sm text-[var(--muted-foreground)]">
@@ -290,7 +289,6 @@ export default async function DashboardPage() {
           </p>
         </Card>
 
-        {/* TỔNG CHI TIÊU */}
         <Card>
           <div className="flex items-center justify-between">
             <p className="text-sm text-[var(--muted-foreground)]">
@@ -325,18 +323,6 @@ export default async function DashboardPage() {
 
           <div className="mt-4">
             <TrendChart data={monthSeries} />
-          </div>
-
-          <div className="mt-1 flex justify-center gap-5 text-xs text-[var(--muted-foreground)]">
-            <span className="flex items-center gap-2">
-              <i className="h-2.5 w-2.5 rounded-full bg-[#4b9e89]" />
-              Thu nhập
-            </span>
-
-            <span className="flex items-center gap-2">
-              <i className="h-2.5 w-2.5 rounded-full bg-[#ef9f8e]" />
-              Chi tiêu
-            </span>
           </div>
         </Card>
 
@@ -388,7 +374,6 @@ export default async function DashboardPage() {
 
       {/* GIAO DỊCH VÀ MỤC TIÊU */}
       <div className="grid gap-5 xl:grid-cols-[1.2fr_.8fr]">
-        {/* GIAO DỊCH GẦN ĐÂY */}
         <Card>
           <div className="mb-5 flex items-center justify-between">
             <div>
@@ -461,7 +446,6 @@ export default async function DashboardPage() {
           )}
         </Card>
 
-        {/* MỤC TIÊU TIẾT KIỆM */}
         <Card>
           <div className="mb-5 flex items-center justify-between">
             <div>
