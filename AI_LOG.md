@@ -1,57 +1,43 @@
 # AI_LOG – Nhật ký sử dụng AI
 
-**Dự án:** Finance Planner – Đồ án cá nhân PHY10615  
-**Công cụ AI:** ChatGPT  
+> **Mức AI theo quy định của đồ án cá nhân:** Mức 3 – AI cộng tác.
+>
+> **Mức độ AI sử dụng thực tế (tự khai báo):** Tương đương Mức 4 – AI toàn phần có kiểm soát.
+>
+> Trong quá trình thực hiện Finance Planner, ChatGPT được sử dụng ở mức độ cao: hỗ trợ tạo và chỉnh sửa nhiều phần mã nguồn, phát triển chức năng, viết trường hợp kiểm thử, phân tích lỗi, chỉnh sửa giao diện và soạn tài liệu. Mã nguồn và tài liệu do AI đề xuất được đưa vào dự án để chạy thử, kiểm tra, phát hiện lỗi và điều chỉnh. Việc khai báo mức sử dụng thực tế nhằm phản ánh trung thực quá trình làm bài; không thay đổi mức AI được đề quy định cho đồ án cá nhân.
+
+**Dự án:** Finance Planner – Đồ án cá nhân PHY10615, HK1 2026–2027  
+**Công cụ AI sử dụng:** ChatGPT  
 **Repository:** https://github.com/25thang9/finance-planner
 
-## 1. Quá trình thực hiện ban đầu
+Giai đoạn đầu, mình trực tiếp làm theo các bài thực hành trên WebLab ở Tuần 8, 9 và 10 để thiết lập và chạy các chức năng nền tảng của Finance Planner. Sau đó, dự án được tiếp tục hoàn thiện với sự hỗ trợ đáng kể của ChatGPT, bao gồm cả mã nguồn do AI đề xuất hoặc tạo ra. Bảng dưới đây ghi lại những công việc có AI tham gia, cách sử dụng kết quả và bước kiểm chứng đã thực hiện. Ngày là thời điểm thực hiện hoặc khoảng thời gian trao đổi; mã commit thể hiện mốc đưa thay đổi lên GitHub, không nhất thiết tương ứng với một prompt riêng lẻ.
 
-Dự án được bắt đầu từ các bài thực hành Tuần 8–10 trên WebLab, gồm thiết lập Next.js, Prisma, PostgreSQL Neon và các chức năng quản lý tài chính cơ bản. Ứng dụng đã được chạy thử trên localhost trước khi tiếp tục hoàn thiện với sự hỗ trợ của ChatGPT.
-
-**Minh chứng thực hành trên local:**
-
-![Dashboard local](./docs/images/dashboard-local.png)
-
-![Giao dịch local](./docs/images/transactions-local.png)
-
-## 2. Nhật ký sử dụng AI
+## Nhật ký sử dụng AI
 
 | Ngày | Công cụ | Việc nhờ AI | Prompt (tóm tắt) | Kết quả dùng thế nào | Mình đã kiểm chứng / sửa gì | Commit/PR |
 |---|---|---|---|---|---|---|
-| 17–18/11/2026 | ChatGPT | Hoàn thiện chức năng cốt lõi | Hỗ trợ xác thực, CRUD giao dịch, Wishlist, Dashboard, lọc URL và thông báo tiết kiệm | Tích hợp và điều chỉnh mã nguồn | Kiểm tra chức năng, dữ liệu và giao diện trên localhost | `7a806a8` |
-| 18/11/2026 | ChatGPT | Bổ sung tính năng mở rộng | Hỗ trợ ngân sách theo danh mục, cảnh báo 80%/100% và biểu đồ so sánh thu chi các tháng | Tích hợp vào trang Ngân sách và Dashboard | Kiểm tra kết quả hiển thị trên local | `7a806a8` |
-| 19/11/2026 | ChatGPT | Cải thiện giao diện | Thiết kế logo VTTT, điều chỉnh Login, Sidebar và Light/Dark Mode | Cập nhật component và CSS | Kiểm tra bố cục, màu sắc và TypeScript | `3214a6d` |
-| 19–21/11/2026 | ChatGPT | Chuẩn hóa tài liệu | Đối chiếu README, AI_LOG và AGENTS với mẫu PHY10615 | Cập nhật tài liệu và minh chứng thực hành | Kiểm tra yêu cầu đề bài và lịch sử Git | `5a14b35`, `2f999a0`, `7e3e63e` |
-| 20–21/11/2026 | ChatGPT | Nhập/Xuất CSV | Xây dựng API, kiểm tra CSV bằng Zod, tải file mẫu và xuất theo bộ lọc | Tích hợp Route Handler và giao diện trang Giao dịch | Sửa import sai `@/lib/dal` thành `@/lib/session`; kiểm tra trên localhost | `1ddc554` |
-| 21/11/2026 | ChatGPT | Kiểm thử CSV | Viết 13 test cho dữ liệu hợp lệ và không hợp lệ | Bổ sung `csv-import.test.ts` | Chạy Vitest: 39/39 test PASS | `1ddc554` |
-| 23/11/2026 | ChatGPT | Mục tiêu tiết kiệm có hạn chót | Bổ sung hạn chót, số tháng còn lại và gợi ý tiết kiệm hằng tháng | Cập nhật Prisma, Wishlist, Server Action và logic tính toán | Tạo lại Prisma Client, kiểm tra chức năng trên localhost | `4f957ab` |
-| 23/11/2026 | ChatGPT | Kiểm thử và xử lý lỗi | Viết 8 test tiết kiệm, kiểm tra TypeScript, ESLint và build | Bổ sung `savings-plan.test.ts`, sửa lỗi purity trong `page.tsx` | 47/47 test PASS; typecheck PASS; ESLint 0 lỗi, 4 cảnh báo; CI GitHub 2/2 PASS | `4f957ab` |
+| 17–18/11/2026 | ChatGPT | Rà soát và hoàn thiện chức năng cốt lõi | Đối chiếu bài thực hành với đề PHY10615; đề xuất và tạo/sửa mã cho Next.js, Prisma, xác thực, CRUD giao dịch, Dashboard, Wishlist và bộ lọc. | Sử dụng nhiều đoạn mã AI đề xuất để bổ sung và hoàn thiện các chức năng nền tảng. | Chạy ứng dụng trên localhost, kiểm tra luồng đăng nhập, trang chức năng, dữ liệu Neon và lỗi trong Terminal. | [`7a806a8`](https://github.com/25thang9/finance-planner/commit/7a806a8) |
+| 18/11/2026 | ChatGPT | Hoàn thiện ngân sách và thống kê | Hỗ trợ viết và tổ chức chức năng ngân sách theo danh mục, tính tỷ lệ sử dụng và biểu đồ trên Dashboard. | Tích hợp vào trang Budgets và các thành phần thống kê. | Thử nhập ngân sách, đối chiếu số liệu với giao dịch và kiểm tra giao diện. | [`7a806a8`](https://github.com/25thang9/finance-planner/commit/7a806a8) |
+| 19/11/2026 | ChatGPT | Điều chỉnh giao diện | Đề xuất bố cục trang đăng nhập, màu teal, sidebar, chế độ sáng/tối và logo VTTT tại khu vực thương hiệu. | Chọn phương án giao diện và cập nhật các component/CSS phù hợp; tên ứng dụng vẫn là Finance Planner. | Xem trực tiếp trên trình duyệt, sửa kích thước logo, độ rõ chữ và bố cục; giữ avatar người dùng riêng. | [`3214a6d`](https://github.com/25thang9/finance-planner/commit/3214a6d) |
+| 19–21/11/2026 | ChatGPT | Rà soát tài liệu ban đầu | Đối chiếu README, AI_LOG, AGENTS và minh chứng thực hành với checklist của cô. | Chỉnh cách trình bày và bổ sung nội dung giải thích dự án. | Kiểm tra tên file, liên kết ảnh, nội dung thực tế và lịch sử commit trước khi cập nhật. | `5a14b35`, `2f999a0`, `7e3e63e` |
+| 20–21/11/2026 | ChatGPT | Xây dựng nhập/xuất CSV | Đề xuất và tạo mã xử lý nhập/xuất CSV, kiểm tra dữ liệu bằng Zod, xuất theo bộ lọc và tạo file mẫu. | Tích hợp Route Handler và giao diện nhập/xuất trong trang Giao dịch. | Phát hiện mã AI tham chiếu `@/lib/dal` không tồn tại; sửa sang cơ chế xác thực tại `@/lib/session` rồi kiểm tra lại. | [`1ddc554`](https://github.com/25thang9/finance-planner/commit/1ddc554) |
+| 21/11/2026 | ChatGPT | Kiểm thử chức năng CSV | Đề xuất test cho dòng CSV hợp lệ và các trường hợp sai định dạng, ngày, loại giao dịch, số tiền. | Bổ sung 13 bài kiểm thử CSV vào bộ Vitest. | Chạy kiểm thử trên máy; tại mốc này ghi nhận **39/39 test đạt**. | [`1ddc554`](https://github.com/25thang9/finance-planner/commit/1ddc554) |
+| 23/11/2026 | ChatGPT | Bổ sung hạn chót cho mục tiêu tiết kiệm | Đề xuất và tạo mã thêm `deadline`, tính thời gian còn lại, gợi ý tiết kiệm hằng tháng và test cho công thức. | Cập nhật Wishlist, logic tính toán, Prisma và kiểm thử. | Thực hiện migration/tạo lại Prisma Client khi cần, thử biểu mẫu trên localhost; mốc kiểm thử ghi nhận **47/47 test đạt**. | [`4f957ab`](https://github.com/25thang9/finance-planner/commit/4f957ab) |
+| 24/11/2026 | ChatGPT | Hoàn thiện cảnh báo ngân sách và tiến độ | Phân biệt cảnh báo sử dụng 80%, đạt 100% và vượt hạn mức; sửa cách hiển thị tiến độ tiết kiệm nhỏ hơn 1%. | Điều chỉnh nghiệp vụ, giao diện ngân sách và tiến độ Wishlist. | So sánh các ngưỡng với dữ liệu thử và kiểm tra tỷ lệ nhỏ không bị làm tròn thành 0%. | [`6ff1fde`](https://github.com/25thang9/finance-planner/commit/6ff1fde) |
+| 24/11/2026 | ChatGPT | Báo cáo so sánh thu chi sáu tháng | Hỗ trợ viết logic tổng hợp thu, chi theo tháng và mã hiển thị biểu đồ so sánh. | Tích hợp phần báo cáo trên Dashboard. | Đối chiếu tổng tiền với giao dịch mẫu và kiểm tra biểu đồ trên giao diện. | [`9632214`](https://github.com/25thang9/finance-planner/commit/9632214) |
+| 24/11/2026 | ChatGPT | Rà soát CRUD và API giao dịch | Kiểm tra thêm/sửa/xóa, lọc bằng URL, xác thực phiên, Zod và trường hợp tham số lọc không hợp lệ. | Điều chỉnh các phần xử lý giao dịch và bổ sung kiểm thử. | Thử CRUD trên trình duyệt; xác nhận API lọc sai trả `400` và kiểm tra quyền truy cập dữ liệu theo tài khoản. | [`61213d6`](https://github.com/25thang9/finance-planner/commit/61213d6) |
+| 24/11/2026 | ChatGPT | Thông báo mốc tiết kiệm | Hỗ trợ tạo logic và mã thông báo ở các mốc 50%, 75%, 100%, đồng thời tránh lặp lại thông báo. | Tích hợp cơ chế thông báo vào chức năng tiết kiệm và bổ sung test. | Thử các mức tiến độ, kiểm tra tình huống vượt nhiều mốc và trạng thái thông báo đã lưu. | [`3cc5dab`](https://github.com/25thang9/finance-planner/commit/3cc5dab) |
+| 24–25/11/2026 | ChatGPT | Thêm chức năng quy đổi ngoại tệ | Đề xuất và tạo mã quy đổi USD/EUR sang VND từ `open.er-api.com`, cache một giờ, ghi nguồn và tạo test. | Tích hợp `lib/exchange-rate.ts`, API `/api/exchange-rates`, trang `/currency` và mục điều hướng. | Thử hai loại tiền, kiểm tra tỷ giá và thời gian cập nhật; chạy thêm 8 test cho xử lý dữ liệu tỷ giá. | [`6a6ae38`](https://github.com/25thang9/finance-planner/commit/6a6ae38) |
+| 25/11/2026 | ChatGPT | Sửa cảnh báo và lỗi hồi quy | Hỗ trợ xử lý dependency `useEffect`, cảnh báo cấu hình PostCSS và lỗi kiểu dữ liệu của Wishlist. | Áp dụng bản sửa có chọn lọc và khôi phục phần biểu mẫu hạn chót bị mất. | Một bản `wishlist-form.tsx` do AI cung cấp thiếu `deadline`, làm phát sinh **3 lỗi TypeScript**; phát hiện qua typecheck/build, sửa lại rồi kiểm tra ESLint, TypeScript và build đều đạt. | Thay đổi được rà soát trong giai đoạn hoàn thiện 24–25/11 |
+| 25/11/2026 | ChatGPT | Thay favicon ứng dụng | Phân biệt avatar dự án trên Vercel với favicon của website; thay biểu tượng Next.js mặc định bằng logo VTTT màu hồng. | Cập nhật favicon tại `app/`, giữ nguyên tên ứng dụng Finance Planner. | Kiểm tra lại biểu tượng trên tab trình duyệt và các file thay đổi trước khi push. | [`705d0a7`](https://github.com/25thang9/finance-planner/commit/705d0a7) |
+| 25/11/2026 | ChatGPT | Hoàn thiện hồ sơ nộp | Đối chiếu yêu cầu README, AGENTS, AI_LOG; kiểm tra cấu trúc repo và cách tạo các tag `fp1`, `fp2`, `fp3`, `v1.0`. | Biên tập tài liệu theo đề và bổ sung mốc phát triển trên GitHub. | Kiểm tra repo công khai; ba tag `fp1`, `fp2`, `fp3` được **tạo bổ sung ngày 25/11** cùng trỏ đến `7a806a8`, không phải ba commit khác nhau. Chưa ghi `v1.0` là đã tạo. | `fp1`, `fp2`, `fp3` → [`7a806a8`](https://github.com/25thang9/finance-planner/commit/7a806a8); cập nhật tài liệu: chờ commit cuối |
 
-## 3. Kết quả kiểm thử
-
-Ngày 23/11/2026, kết quả kiểm thử phiên bản mới nhất:
-
-- **47/47 test PASS** trên 5 file, gồm 46 Unit Test và 1 Component Test.
-- TypeScript typecheck: PASS.
-- Production Build: PASS ở lần kiểm tra đã ghi nhận.
-- ESLint: 0 lỗi, 4 cảnh báo.
-- GitHub Actions: 2/2 checks PASS.
+**Kết quả kiểm tra ngày 25/11/2026:** 86/86 bài kiểm thử Vitest đạt, gồm kiểm thử nghiệp vụ và React component. Kiểm tra TypeScript thành công, ESLint không có lỗi hoặc cảnh báo (0 lỗi, 0 cảnh báo), và lệnh `npm run build` hoàn tất thành công. Các lượt GitHub Actions đã kiểm tra trên repository cũng hiển thị trạng thái thành công.
 
 ## Tự đánh giá cuối bài
 
-**Phần mình tự làm hoàn toàn:**
+- **Phần mình tự làm hoàn toàn:** Trực tiếp thực hành theo các bài học WebLab Tuần 8–10, làm theo các bước thiết lập môi trường, kết nối cơ sở dữ liệu và chạy thử phần nền tảng của Finance Planner. Mình tự thao tác trong VS Code và Terminal, kiểm tra Dashboard, giao dịch và các luồng nghiệp vụ trên localhost; thử giao diện, phát hiện lỗi sau khi tích hợp, lựa chọn phương án chỉnh sửa, quản lý commit/push trên GitHub và kiểm tra ứng dụng trên Vercel Production. Những phần AI trực tiếp tạo hoặc sửa mã đã được khai báo trong bảng nhật ký phía trên.
 
-Thực hành các nội dung ban đầu trên WebLab, cấu hình môi trường, chạy thử ứng dụng, kiểm tra chức năng trên localhost và thực hiện các thao tác Commit, Push.
+- **Phần AI giúp nhiều nhất và mình đã hiểu nó thế nào:** ChatGPT hỗ trợ nhiều nhất ở việc tạo và sửa mã nguồn cho các tính năng, viết kiểm thử, giải thích lỗi và hoàn thiện tài liệu. Qua việc tích hợp và chạy thử, mình hiểu được các luồng cơ bản: Server Actions/Route Handlers xử lý yêu cầu, session xác định người dùng, `userId` giới hạn dữ liệu, Zod kiểm tra đầu vào, Prisma làm việc với cơ sở dữ liệu và Vitest kiểm tra nghiệp vụ. Với tính năng tỷ giá, mình đã thử USD/EUR, kiểm tra thời điểm cập nhật và hiểu vì sao dữ liệu được cache. Việc hiểu các luồng này đến từ quá trình sử dụng và kiểm chứng, không có nghĩa toàn bộ mã nguồn do mình tự viết.
 
-**Phần AI giúp nhiều nhất và mình đã hiểu nó thế nào:**
-
-ChatGPT hỗ trợ nhiều trong việc phát triển chức năng, chỉnh sửa giao diện, xử lý lỗi và viết kiểm thử. Các nội dung được tìm hiểu gồm Zod kiểm tra dữ liệu, Prisma và Neon lưu trữ, session và `userId` bảo vệ dữ liệu, Vitest kiểm thử tự động. 
-
-**Một lần AI sai và cách mình phát hiện:**
-
-Khi phát triển chức năng Xuất CSV, AI đề xuất sử dụng `@/lib/dal` không tồn tại trong dự án. Lỗi được phát hiện qua TypeScript và build, sau đó sửa theo cơ chế xác thực thực tế tại `@/lib/session`. Khi thêm trường `deadline` cho Wishlist, Prisma Client chưa cập nhật nên phát sinh lỗi TypeScript; vấn đề được xử lý bằng migration và tạo lại Prisma Client.
-
----
-
-**Tài liệu thực hành:** https://weblab.koomaru.com/  
-**Repository:** https://github.com/25thang9/finance-planner
+- **Một lần AI sai và cách mình phát hiện:** Khi sửa cảnh báo ESLint, AI cung cấp một phiên bản `wishlist-form.tsx` cũ và làm mất thuộc tính `deadline` đã bổ sung trước đó. Sau khi thay file, lệnh kiểm tra TypeScript phát hiện ba lỗi liên quan đến `deadline` tại `wishlist-manager.tsx`. Mình đối chiếu với phiên bản đang hoạt động, bổ sung lại thuộc tính và trường nhập hạn chót, sau đó chạy lại TypeScript, ESLint và build để xác nhận lỗi đã được xử lý. Trường hợp này cho thấy cần kiểm tra hồi quy và đối chiếu với mã nguồn thực tế trước khi chấp nhận bản sửa do AI đề xuất.
