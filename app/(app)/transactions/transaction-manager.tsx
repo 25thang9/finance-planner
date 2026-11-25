@@ -2,6 +2,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { toast } from "sonner";
 import {
   ArrowDownRight,
   ArrowUpRight,
@@ -15,6 +16,7 @@ import { CATEGORY_NAMES } from "@/lib/labels";
 import {
   TransactionForm,
   type TransactionInitial,
+  type TransactionSaveFeedback,
 } from "./transaction-form";
 
 import { deleteTransaction } from "./actions";
@@ -33,6 +35,21 @@ import { Button } from "@/components/ui/button";
 
 export type TransactionRow = TransactionInitial;
 
+function showSaveFeedback(feedback: TransactionSaveFeedback) {
+  const milestones = feedback.notifications ?? [];
+  if (milestones.length > 0) {
+    // Một toast kết hợp để lời chúc mừng không bị xếp chồng
+    // với toast thông báo lưu giao dịch thông thường.
+    toast.success("🎉 Chúc mừng đạt mốc tiết kiệm!", {
+      description: milestones.join(" · "),
+      duration: 9000,
+    });
+  } else {
+    toast.success(feedback.message ?? "Đã lưu giao dịch");
+  }
+}
+
+
 export function TransactionManager({
   rows,
 }: {
@@ -40,8 +57,9 @@ export function TransactionManager({
 }) {
   const [adding, setAdding] = useState(false);
 
-  const closeAddDialog = useCallback(() => {
+  const closeAddDialog = useCallback((feedback: TransactionSaveFeedback) => {
     setAdding(false);
+    showSaveFeedback(feedback);
   }, []);
 
   return (
@@ -115,8 +133,9 @@ function TransactionItem({
 }) {
   const [editing, setEditing] = useState(false);
 
-  const closeEditDialog = useCallback(() => {
+  const closeEditDialog = useCallback((feedback: TransactionSaveFeedback) => {
     setEditing(false);
+    showSaveFeedback(feedback);
   }, []);
 
   const isIncome = data.type === "INCOME";

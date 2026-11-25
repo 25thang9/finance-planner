@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -21,7 +20,6 @@ import {
   WishlistForm,
   type WishlistInitial,
 } from "./wishlist-form";
-
 import { DeleteConfirm } from "@/components/delete-confirm";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
@@ -53,28 +51,18 @@ function getProgress(balance: number, cost: number): number {
   );
 }
 
-// Dưới 1% hiển thị 2 số thập phân.
-// Từ 1% trở lên hiển thị số nguyên.
-// Không hiển thị 100% khi chưa thực sự đạt đủ tiền.
+// Hiển thị phần trăm với tối đa 2 số thập phân và dấu phẩy theo vi-VN.
+// Không làm tròn lên 100% nếu số tiền thực tế chưa đủ mục tiêu.
 function formatProgress(percent: number): string {
-  if (percent <= 0) return "0%";
+  if (!Number.isFinite(percent) || percent <= 0) return "0%";
   if (percent >= 100) return "100%";
+  if (percent < 0.01) return "<0,01%";
 
-  if (percent < 1) {
-    const display = Math.max(
-      0.01,
-      Math.round(percent * 100) / 100
-    );
-
-    return (
-      display.toLocaleString("vi-VN", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }) + "%"
-    );
-  }
-
-  return `${Math.floor(percent)}%`;
+  const display = Math.floor(percent * 100) / 100;
+  return display.toLocaleString("vi-VN", {
+    minimumFractionDigits: percent < 1 ? 2 : 0,
+    maximumFractionDigits: 2,
+  }) + "%";
 }
 
 function formatDeadline(value: string): string {
@@ -100,7 +88,6 @@ export function WishlistManager({
           <h1 className="mt-2 text-3xl font-bold tracking-tight">
             Wishlist của tôi
           </h1>
-
           <p className="subtle-title mt-2">
             Theo dõi tiến độ tiết kiệm dựa trên số dư hiện tại:{" "}
             <strong>{formatVND(balance)}</strong>.
@@ -111,7 +98,6 @@ export function WishlistManager({
             chưa phân bổ tiền riêng cho từng mục tiêu.
           </p>
         </div>
-
         <Dialog open={add} onOpenChange={setAdd}>
           <DialogTrigger asChild>
             <Button>
@@ -128,14 +114,12 @@ export function WishlistManager({
             <DialogDescription className="mb-5 mt-1">
               Đặt mục tiêu tiết kiệm và hạn chót dự kiến.
             </DialogDescription>
-
             <WishlistForm
               onSaved={() => setAdd(false)}
             />
           </DialogContent>
         </Dialog>
       </div>
-
       {items.length === 0 ? (
         <div className="mt-8">
           <EmptyState
@@ -155,7 +139,6 @@ export function WishlistManager({
           ))}
         </div>
       )}
-
       <div className="panel mt-7 flex items-start gap-3 p-5">
         <Sparkles
           size={20}
@@ -166,7 +149,6 @@ export function WishlistManager({
           <p className="font-semibold">
             Mốc động viên 50% · 75% · 100%
           </p>
-
           <p className="mt-1 text-sm text-[var(--muted-foreground)]">
             Khi số dư vượt một mốc sau thao tác giao dịch,
             hệ thống hiển thị thông báo chúc mừng.
@@ -189,7 +171,6 @@ function WishlistCard({
   today: string;
 }) {
   const [edit, setEdit] = useState(false);
-
   const percent = getProgress(balance, item.cost);
   const percentText = formatProgress(percent);
 
@@ -206,7 +187,6 @@ function WishlistCard({
         <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e0f1f0] text-[#367e84]">
           <Target size={23} />
         </span>
-
         <Badge>
           {PRIORITY_NAMES[item.priority]}
         </Badge>
@@ -224,7 +204,6 @@ function WishlistCard({
         <span className="text-sm font-semibold">
           Tiến độ tiết kiệm
         </span>
-
         <strong className="text-2xl text-[#34838a]">
           {percentText}
         </strong>
@@ -234,7 +213,6 @@ function WishlistCard({
         className="mt-2"
         value={percent}
       />
-
       <p className="mt-3 flex items-center gap-1.5 text-xs text-[var(--muted-foreground)]">
         {percent >= 100 ? (
           <>
@@ -251,7 +229,6 @@ function WishlistCard({
           </>
         )}
       </p>
-
       {item.deadline ? (
         <div className="mt-5 rounded-xl border border-[var(--border)] bg-[var(--muted)]/40 p-4">
           <div className="flex items-center gap-2 text-sm font-semibold">
@@ -261,7 +238,6 @@ function WishlistCard({
             />
             Hạn chót: {formatDeadline(item.deadline)}
           </div>
-
           {plan.status === "active" && (
             <div className="mt-4 space-y-3">
               <p className="flex items-center gap-2 text-sm text-[var(--muted-foreground)]">
@@ -273,7 +249,6 @@ function WishlistCard({
                 <p className="text-xs text-[var(--muted-foreground)]">
                   Gợi ý tiết kiệm mỗi tháng
                 </p>
-
                 <p className="mt-1 flex items-center gap-2 text-xl font-bold text-[#34838a]">
                   <Wallet size={19} />
                   {formatVND(plan.perMonth ?? 0)}
@@ -285,14 +260,12 @@ function WishlistCard({
               </p>
             </div>
           )}
-
           {plan.status === "completed" && (
             <p className="mt-3 flex items-center gap-2 text-sm font-semibold text-emerald-600">
               <CheckCircle2 size={17} />
               Đã đủ số dư để đạt mục tiêu
             </p>
           )}
-
           {plan.status === "overdue" && (
             <p className="mt-3 text-sm text-amber-600">
               Đã quá hạn chót và chưa đủ số dư.
@@ -307,7 +280,6 @@ function WishlistCard({
           Chưa đặt hạn chót cho mục tiêu này.
         </p>
       )}
-
       <div className="mt-6 flex justify-end gap-2 border-t border-[var(--border)] pt-4">
         <Dialog
           open={edit}
@@ -322,7 +294,6 @@ function WishlistCard({
               Sửa
             </Button>
           </DialogTrigger>
-
           <DialogContent>
             <DialogTitle className="text-xl font-bold">
               Sửa mục tiêu
@@ -339,7 +310,6 @@ function WishlistCard({
             />
           </DialogContent>
         </Dialog>
-
         <DeleteConfirm
           id={item.id}
           label={item.name}

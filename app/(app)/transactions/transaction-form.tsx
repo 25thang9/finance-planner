@@ -30,12 +30,17 @@ export type TransactionInitial = {
   date: string;
 };
 
+export type TransactionSaveFeedback = {
+  message?: string;
+  notifications?: string[];
+};
+
 export function TransactionForm({
   initial,
   onSaved,
 }: {
   initial?: TransactionInitial;
-  onSaved?: () => void;
+  onSaved?: (feedback: TransactionSaveFeedback) => void;
 }) {
   const action = initial
     ? updateTransaction.bind(null, initial.id)
@@ -48,15 +53,23 @@ export function TransactionForm({
 
   useEffect(() => {
     if (state.ok) {
-      toast.success(state.message);
+      const feedback: TransactionSaveFeedback = {
+        message: state.message,
+        notifications: state.notifications,
+      };
 
-      state.notifications?.forEach((notification) => {
-        toast.success(notification, {
-          duration: 6000,
+      if (onSaved) {
+        // Giao trách nhiệm hiện toast cho màn hình cha, nơi không bị
+        // unmount khi hộp thoại đóng sau khi lưu giao dịch.
+        onSaved(feedback);
+      } else if (state.notifications?.length) {
+        toast.success("🎉 Chúc mừng đạt mốc tiết kiệm!", {
+          description: state.notifications.join(" · "),
+          duration: 9000,
         });
-      });
-
-      onSaved?.();
+      } else {
+        toast.success(state.message ?? "Đã lưu giao dịch");
+      }
     } else if (state.message) {
       toast.error(state.message);
     }
