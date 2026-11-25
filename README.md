@@ -31,8 +31,8 @@ Phần nền tảng của dự án được thực hành theo các bài học We
 | Thông tin | Giá trị |
 |---|---|
 | Địa chỉ đăng nhập | [Trang đăng nhập Production](https://finance-planner-25thang9.vercel.app/login) |
-| Email demo | **`[EMAIL_DEMO]`** |
-| Mật khẩu demo | **`[MAT_KHAU_DEMO]`** |
+| Email demo | **`vuthithanhthao25@gmail.com`** |
+| Mật khẩu demo | **`1234567890`** |
 
 Tài khoản demo phục vụ đánh giá học phần, sử dụng dữ liệu giả lập để minh họa các luồng giao dịch và mục tiêu tiết kiệm. Giảng viên có thể đăng nhập trên website Production để thao tác và kiểm thử các chức năng. Mật khẩu demo được sử dụng riêng cho đồ án học tập; dữ liệu trong tài khoản là dữ liệu minh họa, không phải dữ liệu tài chính thực tế.
 
