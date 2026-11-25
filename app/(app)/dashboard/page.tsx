@@ -473,6 +473,15 @@ export default async function DashboardPage() {
                   totals.balance,
                   w.cost
                 );
+                const exactProgress = w.cost > 0
+                  ? Math.min(100, Math.max(0, (totals.balance / w.cost) * 100))
+                  : 0;
+                const progressLabel = exactProgress > 0 && exactProgress < 1
+                  ? exactProgress.toLocaleString("vi-VN", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })
+                  : String(progress);
 
                 return (
                   <div key={w.id}>
@@ -482,7 +491,7 @@ export default async function DashboardPage() {
                       </p>
 
                       <Badge>
-                        {progress}%
+                        {progressLabel}%
                       </Badge>
                     </div>
 

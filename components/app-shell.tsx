@@ -16,6 +16,7 @@ import {
   ArrowLeftRight,
   Target,
   PiggyBank,
+  Coins,
   LogOut,
   Sun,
   Moon,
@@ -44,6 +45,11 @@ const links = [
     href: "/budgets",
     label: "Ngân sách",
     icon: PiggyBank,
+  },
+  {
+    href: "/currency",
+    label: "Quy đổi tiền tệ",
+    icon: Coins,
   },
 ];
 
